@@ -44,7 +44,7 @@ class Player
     @@player_num += 1
     @player = @@player_num
     @name = name
-    @marks = []
+    @marks = %w[a1 a2]
   end
 
   def winning?
@@ -87,36 +87,19 @@ puts 'a _|_|_'
 puts 'b _|_|_'
 puts 'c  | |'
 
-# ask #{player1.name} for co-ords
-puts "#{player_1_name} it is your turn please enter a co-ord"
-player_1_choice = gets.chomp
-# player_1_marks = []
-# player_1_marks.push(player_1_choice)
-player1.co_ord(player_1_choice)
-puts player1.player
-puts player1.marks
+def play(player_object)
+  puts "#{player_object.name} it is your turn please enter a co-ord"
+  player_object.co_ord(gets.chomp)
+  player_object.winning?
+end
+# puts "yeay #{player1.name} won" if play(player1)
+# puts "yeay #{player2.name} won" if play(player2)
 
-# check if co-ords are available and if (winning = true)
-# win_combo = [
-#   %w[a1 a2 a3],
-#   %w[b1 b2 b3],
-#   %w[c1 c2 c3],
-#   %w[a1 b2 c3],
-#   %w[a3 b2 c1],
-#   %w[a1 b1 c1],
-#   %w[a2 b2 c2],
-#   %w[a3 b3 c3]
-# ]
+playing = true
+round = 0
 
-
-# puts winning?(player_1_marks)
-# draw new grid with player 1 choice
-# ask #{player2.name} for co-ords
-puts "#{player_2_name} it is your turn, please enter a co-ord"
-player_2_choice = gets.chomp
-# player_2_marks = []
-player2.co_ord(player_2_choice)
-# check if co-ords are available and if (winning = true)
-# print board with player 1 marks
-
-# Board with co-ordinates for players to play on
+while playing
+  players = [player1, player2]
+  playing = false if play(players[round % 2])
+  round += 1
+end
